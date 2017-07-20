@@ -1,0 +1,75 @@
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     public int val;
+ *     public ListNode next;
+ *     ListNode(int x) { val = x; next = null; }
+ * }
+ */
+public class Solution {
+	public ListNode sortList(ListNode a) {
+	    //implement merge sort  on LinkedList- it will five us O(n log n)
+	    return sort(a);
+	    
+	}
+	
+	public ListNode sort(ListNode a){
+	    if(a==null){
+	        return null;
+	    }
+	    if(a.next==null){
+	        return a;
+	    }
+	    
+	    ListNode l;
+	    ListNode r;
+	    ListNode slow = a;
+	    ListNode fast = a;
+	    while(fast!=null&&fast.next!=null){
+	        fast = fast.next.next;
+	        slow = slow.next;
+	    }
+	    r=slow;
+	    slow=a;
+	    while(slow.next!=r){
+	        slow = slow.next;
+	    }
+	    slow.next = null;
+	    l=a;
+	    
+	    ListNode r1 = sort(r);
+	    ListNode l1 = sort(l);
+	    
+	    return merge(l1,r1);
+	}
+	
+	public ListNode merge(ListNode a, ListNode b){
+	    if(a==null){return b;}
+	    if(b==null){return a;}
+	    
+	    ListNode head = new ListNode(0);
+	    ListNode p=head;
+	    while(a!=null&&b!=null){
+	        if(a.val<=b.val){
+	            p.next = a;
+	            a=a.next;
+	        }else{
+	            p.next = b;
+	            b=b.next;
+	        }
+	        p=p.next;
+	    }
+	    while(a!=null){
+	        p.next = a;
+	        a = a.next;
+	        p=p.next;
+	    }
+	    while(b!=null){
+	        p.next = b;
+	        b=b.next;
+	        p=p.next;
+	    }
+	    
+	    return head.next;
+	}
+}
