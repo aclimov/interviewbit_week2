@@ -1,0 +1,33 @@
+public class Solution {
+	public int diffPossible(final List<Integer> a, int b) {
+	    Collections.sort(a);
+	    if(a.size()<2){return 0;}
+	    int j=a.size()-1;
+	    HashMap<Integer,Integer> h = new HashMap();
+	    
+	    while(j>=0){
+	        int x = a.get(j);
+	        int y = a.get(j)-b;
+	        if(h.containsKey(x))
+	        {
+	            return 1;
+	        }
+	        else{
+	            h.put(y, j);        
+	        }
+	        j--;
+	    }
+	    
+	    
+	    j=0;
+	     while(j>=0){
+	         if(h.containsKey(a.get(j))){
+	             if(h.get(a.get(j))!=j){
+	             return  1;
+	             }
+	         }
+	         j--;
+	     }
+	    return 0;
+	}
+}
