@@ -1,0 +1,81 @@
+public class Solution {
+	public String minWindow(String S, String T) {
+	    
+	    HashMap<Character, Integer> h= new HashMap<Character,Integer>();
+	    
+	    int remaincover=T.length();
+	    
+	    for(int i=0;i<T.length();i++){
+	        
+	        Character  c = T.charAt(i);
+	        if(h.containsKey(c)){
+	            h.put(c,h.get(c)+1);
+	        }else{
+	            h.put(c,1);
+	        }
+	    }
+	    
+	    int I=-1,J=-1;
+	    int minlen=Integer.MAX_VALUE;
+	    int i=0,j=0;
+	    while(i<S.length()){
+	        
+	        Character c = S.charAt(i);
+	        if(h.containsKey(c)){
+	            if(h.get(c)>0){
+	                remaincover--;
+	            }
+	             h.put(c,h.get(c)-1);
+	        }
+	        
+	        while(j<=i&&remaincover==0){
+	            int clen = i-j+1;
+	            if(clen<minlen){
+	                I = i;
+	                J = j;
+	                minlen = clen;
+	            }
+	            
+	            Character c1 = S.charAt(j);
+	             if(h.containsKey(c1)){
+	                 h.put(c1,h.get(c1)+1);
+	                 if(h.get(c1)>0){
+	                    remaincover++;
+	                }
+	                }
+	                
+	                
+	         j++;   
+	        }
+	        
+	        i++;
+	    }
+	    
+	    
+	     while(j<i&&remaincover==0){
+	            int clen = i-j+1;
+	            if(clen<minlen){
+	                I = i;
+	                J = j;
+	                minlen = clen;
+	            }
+	            
+	            Character c1 = S.charAt(j);
+	            if(h.containsKey(c1)){
+	                 h.put(c1,h.get(c1)+1);
+	                  if(h.get(c1)>0){
+	                    remaincover++;
+	                }
+	                }
+	                
+	               
+	         j++;   
+	        }
+	    
+	    
+	    if(I>=0){
+	        return S.substring(J,I+1);
+	    }
+	    return "";
+	}
+}
